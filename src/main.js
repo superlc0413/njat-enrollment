@@ -16,7 +16,7 @@ import XInput from "@/component/x-input/x-input"
 import XPopper from "@/component/x-popper/x-popper"
 import XSelect from "@/component/x-select/x-select"
 import XOption from "@/component/x-select/x-option"
-import XLogo from "@/component/x-header/x-header"
+import XHeader from "@/component/x-header/x-header"
 import XFooter from "@/component/x-footer/x-footer"
 import XInfo from "@/component/x-info/x-info"
 import XPage from "@/component/x-page/x-page"
@@ -82,7 +82,7 @@ Vue.mixin({
     XPopper,
     XSelect,
     XOption,
-    XLogo,
+    XHeader,
     XFooter,
     XInfo,
     XPage
