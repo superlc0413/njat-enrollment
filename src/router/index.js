@@ -12,79 +12,81 @@ import Page404 from '@/card/404/404'
 
 Vue.use(Router)
 
-// 报名进行中的路由配置
-const routes_enrolling = [
-  {
-    code: 'enroll-notice',
+// 所有路由的映射表
+const map_routes = {
+  "enroll-notice": {
     component: EnrollNotice,
-    ch: '报名须知'
+    title: '报名须知'
   },
-  {
-    code: 'enroll-entry',
+  "enroll-entry": {
     component: EnrollEntry,
-    ch: '报名入口'
+    title: '报名入口'
   },
-  {
-    code: 'coupe-enroll',
-    component: CoupeEnroll,
-    ch: '双人报名'
-  },
-  {
-    code: 'single-enroll',
+  "single-enroll": {
     component: SingleEnroll,
-    ch: '个人报名'
+    title: '个人报名'
   },
-  {
-    code: 'family-enroll',
+  "coupe-enroll": {
+    component: CoupeEnroll,
+    title: '双人报名'
+  },
+
+  "family-enroll": {
     component: FamilyEnroll,
-    ch: '亲子报名'
+    title: '亲子报名'
   },
-  {
-    code: 'enroll-success',
+  "enroll-success": {
     component: EnrollSuccess,
-    ch: '报名成功'
+    title: '报名成功'
   },
-  {
-    code: 'order-list',
+  "order-list": {
     component: OrderList,
-    ch: '我的订单'
-  }
-]
-
-// 报名结束后的路由配置
-const routes_enrollEnd = [
-  {
-    code: 'order-list',
-    component: EnrollOver,
-    ch: '我的订单'
+    title: '我的订单'
   },
-  {
-    code: 'enroll-over',
-    component: Page404,
-    ch: '报名截止'
+  "enroll-over": {
+    component: EnrollOver,
+    title: '报名截止'
   }
+}
+
+// 报名进行中的路由
+const routes_enrolling = [
+  "enroll-notice",
+  "enroll-entry",
+  "single-enroll",
+  "coupe-enroll",
+  "family-enroll",
+  "enroll-success",
+  "order-list",
 ]
+// 报名结束后的路由
+const routes_enrollEnd = [
+  "enroll-over"
+]
+// 用特定的路由配置列表生成vue路由
+const routes = []
+routes_enrolling.forEach(key => {
+  const option = map_routes[key]
+  if (option) {
+    routes.push({
+      path: '/' + key,
+      name: key,
+      component: option.component,
+      meta: {
+        title: option.title
+      }
+    })
+  }
+})
 
-const routes = routes_enrolling.reduce((arr, _) => {
-  arr.push({
-    path: '/' + _.code,
-    name: _.code,
-    component: _.component,
-    meta: {
-      ch: _.ch
-    }
-  })
-  return arr
-}, [])
-
-// 功能性路由
+// 特殊路由
 routes.push(
   {
     path: '/',
     name: 'default',
     component: routes[0].component,
     meta: {
-      ch: routes[0].meta.ch
+      title: routes[0].meta.title
     }
   },
   {
@@ -92,14 +94,14 @@ routes.push(
     name: '404',
     component: Page404,
     meta: {
-      ch: '找不到该页'
+      title: '找不到该页',
     }
   },
   {
     path: '*',
     redirect: '/404',
     meta: {
-      ch: '404'
+      title: '找不到该页',
     }
   }
 )
@@ -107,7 +109,7 @@ routes.push(
 const myRouter = new Router({ routes })
 
 myRouter.afterEach((to, from) => {
-  document.title = to.meta.ch
+  document.title = to.meta.title
 })
 
 export default myRouter
