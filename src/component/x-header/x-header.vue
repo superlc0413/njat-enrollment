@@ -1,9 +1,8 @@
 <template>
-  <div class="x-logo">
+  <div class="x-header">
     <ul v-if="!useImgTitle" class="txt-title">
       <li>2019南京奥体中心</li>
-      <li>“三菱重工空调杯”</li>
-      <li>青少年羽毛球邀请赛</li>
+      <li>夏令营</li>
     </ul>
     <img v-if="useImgTitle" class="img-title" :src="titlePng">
     <div v-if="raceDate" class="date-row ib-ctn tc">
@@ -36,7 +35,7 @@ export default {
 <style lang="scss" scoped>
 $logoRowMargin: 0.26rem;
 
-.x-logo {
+.x-header {
   margin: 0 auto;
   .txt-title {
     li {

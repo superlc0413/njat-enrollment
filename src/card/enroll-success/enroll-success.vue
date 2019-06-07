@@ -1,6 +1,6 @@
 <template>
   <x-page>
-    <x-logo/>
+    <x-header/>
     <x-info icon="success.png" title="报名成功" desc="请按公众号信息及时领取赛事包"/>
     <x-footer/>
   </x-page>

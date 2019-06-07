@@ -51,8 +51,8 @@ const map_routes = {
 
 // 报名进行中的路由
 const routes_enrolling = [
-  "enroll-notice",
   "enroll-entry",
+  "enroll-notice",
   "single-enroll",
   "coupe-enroll",
   "family-enroll",

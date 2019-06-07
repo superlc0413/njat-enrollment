@@ -1,6 +1,6 @@
 <template>
   <x-page>
-    <x-logo></x-logo>
+    <x-header></x-header>
     <div v-if="orderList.length>0" class="my-order">
       <div class="title tc">订单查询</div>
       <ul class="info-list">

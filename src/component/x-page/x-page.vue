@@ -10,7 +10,6 @@
 export default {};
 </script>
 
-
 <style lang="scss" scoped>
 .x-page {
   height: 100%;

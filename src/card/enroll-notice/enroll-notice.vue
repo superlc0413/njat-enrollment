@@ -1,6 +1,6 @@
 <template>
   <x-page>
-    <x-logo></x-logo>
+    <x-header></x-header>
     <div class="title tc">参赛声明及安全须知</div>
     <ul class="notices">
       <li v-for="(_, i) in notices" :key="i" class="ib-ctn tl">
