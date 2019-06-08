@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import EnrollEntry from '@/card/enroll-entry/enroll-entry'
 import EnrollNotice from '@/card/enroll-notice/enroll-notice'
 import SingleEnroll from '@/card/single-enroll/single-enroll'
-import FamilyEnroll from '@/card/family-enroll/family-enroll'
+import NormalEnroll from '@/card/normal-enroll/normal-enroll'
 import CoupeEnroll from '@/card/coupe-enroll/coupe-enroll'
+import FamilyEnroll from '@/card/family-enroll/family-enroll'
 import EnrollSuccess from '@/card/enroll-success/enroll-success'
 import OrderList from '@/card/order-list/order-list'
 import EnrollOver from '@/card/enroll-over/enroll-over'
@@ -30,10 +31,13 @@ const map_routes = {
     component: CoupeEnroll,
     title: '双人报名'
   },
-
   "family-enroll": {
     component: FamilyEnroll,
     title: '亲子报名'
+  },
+  "normal-enroll": {
+    component: NormalEnroll,
+    title: '活动报名'
   },
   "enroll-success": {
     component: EnrollSuccess,
@@ -52,12 +56,7 @@ const map_routes = {
 // 报名进行中的路由
 const routes_enrolling = [
   "enroll-entry",
-  "enroll-notice",
-  "single-enroll",
-  "coupe-enroll",
-  "family-enroll",
-  "enroll-success",
-  "order-list",
+  "normal-enroll"
 ]
 // 报名结束后的路由
 const routes_enrollEnd = [

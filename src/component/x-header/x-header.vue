@@ -2,7 +2,7 @@
   <div class="x-header">
     <ul v-if="!useImgTitle" class="txt-title">
       <li>2019南京奥体中心</li>
-      <li>夏令营</li>
+      <li>夏令营活动报名</li>
     </ul>
     <img v-if="useImgTitle" class="img-title" :src="titlePng">
     <div v-if="raceDate" class="date-row ib-ctn tc">

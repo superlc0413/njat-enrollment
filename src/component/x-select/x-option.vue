@@ -19,10 +19,16 @@ export default {
   },
   methods: {
     itemClk() {
-      this.slotOwner && this.slotOwner.modifyValue(this);
+      if (this.$parent.changeSelected) {
+        this.$parent.changeSelected(this);
+      } else {
+        console.err("[xauto] x-option should be child of x-select");
+      }
     }
   },
-  created() {}
+  created() {
+    this.$parent.optionCreated(this);
+  }
 };
 </script>
 

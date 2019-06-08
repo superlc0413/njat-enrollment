@@ -20,6 +20,7 @@ import XHeader from "@/component/x-header/x-header"
 import XFooter from "@/component/x-footer/x-footer"
 import XInfo from "@/component/x-info/x-info"
 import XPage from "@/component/x-page/x-page"
+import XView from "@/component/x-view/x-view"
 
 // const openid = getUrlParam('openid')
 // if (openid) {
@@ -85,7 +86,8 @@ Vue.mixin({
     XHeader,
     XFooter,
     XInfo,
-    XPage
+    XPage,
+    XView
   }
 })
 

@@ -9,22 +9,28 @@
       <div class="err">{{ageError}}</div>
     </li>
     <li>
-      <x-input placeholder="手机号" maxlength="11" @blur="checkPhone" :must="!isChild" v-model="phone"></x-input>
-      <div class="err">{{phoneError}}</div>
-    </li>
-    <li>
       <x-input placeholder="身份证" maxlength="18" @blur="checkIdCard" v-model="idCard"></x-input>
       <div class="err">{{idCardError}}</div>
     </li>
-    <li :class="{invisible: noSex != undefined}">
-      <x-select v-model="sex" placeholder="性别">
-        <x-option v-for="_ in sexList" :label="_.text" :value="_.value" :key="_.value"></x-option>
+    <li>
+      <x-input placeholder="手机号" maxlength="11" @blur="checkPhone" :must="false" v-model="phone"></x-input>
+      <div class="err">{{phoneError}}</div>
+    </li>
+    <li>
+      <x-select v-model="term" placeholder="期别">
+        <x-option v-for="_ in terms" :label="_.label" :value="_.value" :key="_.value"></x-option>
       </x-select>
       <div class="err">&nbsp;</div>
     </li>
-    <li :class="{invisible: !groupList.length}">
-      <x-select v-model="group" placeholder="组别">
-        <x-option v-for="_ in groupList" :label="_.text" :value="_.value" :key="_.value"></x-option>
+    <li>
+      <x-select v-model="lesson_am" placeholder="上午课程">
+        <x-option v-for="_ in lessonList_am" :label="_.label" :value="_.value" :key="_.value"></x-option>
+      </x-select>
+      <div class="err">&nbsp;</div>
+    </li>
+    <li>
+      <x-select v-model="lesson_pm" placeholder="下午课程">
+        <x-option v-for="_ in lessonList_pm" :label="_.label" :value="_.value" :key="_.value"></x-option>
       </x-select>
       <div class="err">&nbsp;</div>
     </li>
@@ -40,17 +46,7 @@ import {
 } from "@/common/unique/validator";
 
 export default {
-  props: {
-    isChild: {
-      type: Boolean,
-      default: false
-    },
-    groupList: {
-      type: Array,
-      default: () => []
-    },
-    noSex: {}
-  },
+  props: {},
   data() {
     return {
       must: "必填",
@@ -59,14 +55,45 @@ export default {
       age: "",
       phone: "",
       idCard: "",
-      sex: "1",
-      sexList: [{ value: "1", text: "男" }, { value: "2", text: "女" }],
-      group: "A",
       nameError: "",
       ageError: "",
       phoneError: "",
-      idCardError: ""
+      idCardError: "",
+      lessonMap: {
+        "1": {
+          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
+          pm: [{ label: "棒球", value: "3" }, { label: "网球", value: "6" }]
+        },
+        "2": {
+          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
+          pm: [{ label: "乒乓球", value: "4" }, { label: "网球", value: "6" }]
+        },
+        "3": {
+          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
+          pm: [{ label: "足球", value: "5" }, { label: "网球", value: "6" }]
+        }
+      },
+      terms: [
+        { label: "第一期", value: "1" },
+        { label: "第二期", value: "2" },
+        { label: "第三期", value: "3" }
+      ],
+      term: "1",
+      lessonList_am: [],
+      lessonList_pm: [],
+      lesson_am: "",
+      lesson_pm: ""
     };
+  },
+  computed: {},
+  watch: {
+    term(newVal, oldVal) {
+      const lessonList = this.lessonMap[newVal];
+      this.lessonList_am = lessonList.am;
+      this.lessonList_pm = lessonList.pm;
+      this.lesson_am = this.lessonList_am[0].value;
+      this.lesson_pm = this.lessonList_pm[0].value;
+    }
   },
   methods: {
     checkName() {
@@ -77,10 +104,7 @@ export default {
     },
     checkPhone() {
       // 是孩子手机号为空，或者手机号校验通过，手机号就不报错
-      this.phoneError =
-        validatePhone(this.phone) || (this.isChild && this.phone === "")
-          ? ""
-          : "请输入正确的手机号";
+      this.phoneError = validatePhone(this.phone) ? "" : "请输入正确的手机号";
     },
     checkIdCard() {
       this.idCardError = validateIdCard(this.idCard)
@@ -105,6 +129,12 @@ export default {
       if (err) return { err };
       else return data;
     }
+  },
+  created() {
+    this.lessonList_am = this.lessonMap[1].am;
+    this.lessonList_pm = this.lessonMap[1].pm;
+    this.lesson_am = this.lessonList_am[0].value;
+    this.lesson_pm = this.lessonList_pm[0].value;
   }
 };
 </script>
