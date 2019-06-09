@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import EnrollEntry from '@/card/enroll-entry/enroll-entry'
 import EnrollNotice from '@/card/enroll-notice/enroll-notice'
-import SingleEnroll from '@/card/single-enroll/single-enroll'
+// import SingleEnroll from '@/card/single-enroll/single-enroll'
+// import CoupeEnroll from '@/card/coupe-enroll/coupe-enroll'
+// import FamilyEnroll from '@/card/family-enroll/family-enroll'
 import NormalEnroll from '@/card/normal-enroll/normal-enroll'
-import CoupeEnroll from '@/card/coupe-enroll/coupe-enroll'
-import FamilyEnroll from '@/card/family-enroll/family-enroll'
 import EnrollSuccess from '@/card/enroll-success/enroll-success'
 import OrderList from '@/card/order-list/order-list'
 import ConfirmOrder from '@/card/confirm-order/confirm-order'
@@ -24,21 +24,25 @@ const map_routes = {
     component: EnrollEntry,
     title: '报名入口'
   },
-  "single-enroll": {
-    component: SingleEnroll,
-    title: '个人报名'
-  },
-  "coupe-enroll": {
-    component: CoupeEnroll,
-    title: '双人报名'
-  },
-  "family-enroll": {
-    component: FamilyEnroll,
-    title: '亲子报名'
-  },
+  // "single-enroll": {
+  //   component: SingleEnroll,
+  //   title: '个人报名'
+  // },
+  // "coupe-enroll": {
+  //   component: CoupeEnroll,
+  //   title: '双人报名'
+  // },
+  // "family-enroll": {
+  //   component: FamilyEnroll,
+  //   title: '亲子报名'
+  // },
   "normal-enroll": {
     component: NormalEnroll,
     title: '活动报名'
+  },
+  "confirm-order": {
+    component: ConfirmOrder,
+    title: '信息确认'
   },
   "enroll-success": {
     component: EnrollSuccess,
@@ -47,10 +51,6 @@ const map_routes = {
   "order-list": {
     component: OrderList,
     title: '我的订单'
-  },
-  "confirm-order": {
-    component: ConfirmOrder,
-    title: '信息确认'
   },
   "enroll-over": {
     component: EnrollOver,
@@ -62,7 +62,8 @@ const map_routes = {
 const routes_enrolling = [
   "enroll-entry",
   "normal-enroll",
-  "confirm-order"
+  "confirm-order",
+  "enroll-success"
 ];
 // 报名结束后的路由
 const routes_enrollEnd = [
@@ -114,9 +115,9 @@ routes.push(
 
 const myRouter = new Router({ routes })
 
-myRouter.beforeEach((to, from, next) => {
-  next();
-})
+// myRouter.beforeEach((to, from, next) => {
+//   next();
+// })
 
 myRouter.afterEach((to, from) => {
   document.title = to.meta.title

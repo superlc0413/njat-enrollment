@@ -1,7 +1,7 @@
 <template>
   <x-page>
     <x-header/>
-    <x-info icon="success.png" title="报名成功" desc="请按公众号信息及时领取赛事包"/>
+    <x-info icon="success.png" title="报名成功" desc="请关注微信公众号相关信息"/>
     <x-footer/>
   </x-page>
 </template>
