@@ -5,21 +5,22 @@
       <div class="title tc">订单查询</div>
       <ul class="info-list">
         <li v-for="(_,i) in orderList" :key="i">
-          <div class="ib-ctn single-row tl">
-            <span class="cap txt">身份证号：</span>
-            <span class="txt">{{_.idCard}}</span>
+          <div>
+            <x-data-item class="col-8" caption="姓名">{{_.name}}</x-data-item>
+            <x-data-item class="col-4" caption="年龄">{{_.age}}</x-data-item>
           </div>
-          <div class="ib-ctn single-row tl">
-            <span class="cap txt">姓名：</span>
-            <span class="wfixed txt">{{_.name}}</span>
-            <span class="cap txt">性别：</span>
-            <span class="txt">{{_.sexLabel}}</span>
+          <div>
+            <x-data-item caption="身份证号">{{_.idCard}}</x-data-item>
           </div>
-          <div class="ib-ctn single-row tl">
-            <span class="cap txt">参赛项目：</span>
-            <span class="wfixed txt">{{_.typeLabel}}</span>
-            <span class="cap txt">组别：</span>
-            <span class="txt">{{_.groups}}</span>
+          <div>
+            <x-data-item caption="联系电话">{{_.phone}}</x-data-item>
+          </div>
+          <div>
+            <x-data-item caption="期别">{{_.term}}</x-data-item>
+          </div>
+          <div>
+            <x-data-item class="col-6" caption="上午课程">{{_.lesson_am}}</x-data-item>
+            <x-data-item class="col-6" caption="下午课程">{{_.lesson_pm}}</x-data-item>
           </div>
         </li>
       </ul>
@@ -35,14 +36,17 @@
 
 <script>
 import orderList from "@/card/model/order-data";
-const sexMap = { "1": "男", "2": "女" };
-const typeMap = { "1": "单打", "2": "双打", "3": "亲子" };
+
+const sexLabels = ["", "男", "女"];
+const termLabels = ["", "第一期", "第二期", "第三期"];
+const lessonLabels = ["", "游泳", "滑冰", "棒球", "网球", "乒乓球", "足球"];
 
 export default {
   data() {
     return {
-      orderList: [],
-      enrollOver: false
+      devMode: true,
+      enrollOver: false,
+      orderList: []
     };
   },
   methods: {
@@ -50,14 +54,22 @@ export default {
       location.hash = this.enrollOver ? "/enroll-over" : "/enroll-entry";
     },
     preprocess(data) {
-      data.forEach(_ => {
-        // 不确定性别、组别，后台给的是中文还是数字
-        const isSexNum = parseInt(_.sex) > 0;
-        _.sexLabel = isSexNum ? sexMap[_.sex] : _.sex;
-        const isTypeNum = parseInt(_.type) > 0;
-        _.typeLabel = isTypeNum ? typeMap[_.type] : _.type;
+      return data.map(_ => {
+        return {
+          // 基础数据
+          name: _.name,
+          age: _.age,
+          idCard: _.idCard,
+          phone: _.phone,
+          // select数据，不确定后台给的是中文还是数字
+          // sex: parseInt(_.sex) > 0 ? sexLabels[_.sex] : _.sex,
+          term: parseInt(_.period) > 0 ? termLabels[_.period] : _.period,
+          lesson_am:
+            parseInt(_.forenoon) > 0 ? lessonLabels[_.forenoon] : _.forenoon,
+          lesson_pm:
+            parseInt(_.afternoon) > 0 ? lessonLabels[_.afternoon] : _.afternoon
+        };
       });
-      return data;
     }
   },
   computed: {
@@ -69,14 +81,17 @@ export default {
     }
   },
   mounted() {
-    // 假数据
-    // this.orderList = this.preprocess(orderList);
+    if (this.devMode) {
+      // 假数据
+      this.orderList = this.preprocess(orderList);
+      return;
+    }
 
     // 入参data
     const data = {};
     this.loading();
     this.$http
-      .post("/order_bm.php", data)
+      .post("/order2.php", data)
       .then(resp => {
         this.endLoading();
         if (
@@ -121,32 +136,17 @@ export default {
         &:first-child {
           margin-top: 0px;
         }
-        div {
-          margin-top: 8px;
-          &:first-child {
-            margin-top: 0px;
-          }
-          .txt {
-            font-size: 12px;
-            &.wfixed {
-              width: 2.4rem;
-            }
-          }
-          .cap {
-            width: 64px;
-            margin-left: 10px;
-            text-align: right;
-            font-weight: bold;
-            &:first-child {
-              margin-left: 0;
+        > div {
+          font-size: 0;
+          .x-data-item {
+            /deep/ {
+              .x-data-item__caption {
+                text-align: left;
+              }
             }
           }
         }
       }
-    }
-    .switch {
-      width: 85%;
-      margin: 25px auto 0;
     }
     .x-footer {
       margin-top: 0.5rem;

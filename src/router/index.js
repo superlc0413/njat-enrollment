@@ -63,7 +63,8 @@ const routes_enrolling = [
   "enroll-entry",
   "normal-enroll",
   "confirm-order",
-  "enroll-success"
+  "enroll-success",
+  "order-list"
 ];
 // 报名结束后的路由
 const routes_enrollEnd = [

@@ -1,7 +1,7 @@
 <template>
   <div class="x-data-item ib-ctn">
-    <div class="caption tr">{{caption}}：</div>
-    <div class="value">
+    <div class="x-data-item__caption">{{caption}}：</div>
+    <div class="x-data-item__value">
       <slot></slot>
     </div>
   </div>
@@ -22,16 +22,21 @@ export default {
 <style lang="scss">
 .x-data-item {
   display: inline-block;
-  .caption {
+  white-space: nowrap;
+  overflow: hidden;
+  .x-data-item__caption {
     font-size: 14px;
     color: #fff;
     white-space: nowrap;
     width: 5em;
+    text-align: right;
   }
-  .value {
+  .x-data-item__value {
     font-size: 14px;
     color: #fff;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>
