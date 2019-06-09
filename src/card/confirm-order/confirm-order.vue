@@ -49,7 +49,7 @@ export default {
       term: {},
       lesson_am: {},
       lesson_pm: {},
-      toPay: 0
+      toPay: 4980
     };
   },
   methods: {
@@ -117,8 +117,11 @@ export default {
             // js调启支付
             wxPay(resp.data.data, success => {
               this.endLoading();
-              if (success) this.checkOrder(resp.data.order_no);
-              else this.msg("支付失败");
+              if (success) {
+                this.checkOrder(resp.data.order_no);
+              } else {
+                this.msg("支付失败");
+              }
             });
           } else {
             this.endLoading();
@@ -155,24 +158,15 @@ export default {
       font-size: 0;
       padding: 0 10%;
       text-align: left;
-      line-height: 0.85rem;
-      .x-data-item {
-        &.half,
-        &.half + .x-data-item {
-          width: 50%;
-        }
-        &.quarter {
-          width: 25%;
-        }
-        &.quarter + .x-data-item {
-          width: 75%;
-        }
+      margin-top: 0.7rem;
+      &:first-child {
+        margin-top: 0;
       }
     }
   }
   .btns {
     text-align: center;
-    margin: 0.6rem auto 0;
+    margin: 0.7rem auto 0;
     .confirm-btn {
       margin-left: 1rem;
     }

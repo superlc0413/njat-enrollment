@@ -44,7 +44,7 @@ const lessonLabels = ["", "游泳", "滑冰", "棒球", "网球", "乒乓球", "
 export default {
   data() {
     return {
-      devMode: true,
+      devMode: false,
       enrollOver: false,
       orderList: []
     };

@@ -7,7 +7,7 @@ import VueAxios from "vue-axios"
 // app & router
 import App from "./App"
 import router from "./router"
-// js工具对象
+// js全局对象
 import eventBus from "@/common/global/event-bus.js"
 import global from "@/common/global/runtime-cache.js";
 // ui组件
@@ -22,6 +22,8 @@ import XInfo from "@/component/x-info/x-info"
 import XDataItem from "@/component/x-data-item/x-data-item"
 import XPage from "@/component/x-page/x-page"
 import XView from "@/component/x-view/x-view"
+// 第三方组件
+// import VueQrcode from "@chenfengyuan/vue-qrcode"
 
 // const openid = getUrlParam('openid')
 // if (openid) {
@@ -90,7 +92,8 @@ Vue.mixin({
     XInfo,
     XDataItem,
     XPage,
-    XView
+    XView,
+    // qrcode: VueQrcode
   }
 })
 
