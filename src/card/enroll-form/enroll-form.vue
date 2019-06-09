@@ -17,19 +17,19 @@
       <div class="err">{{phoneError}}</div>
     </li>
     <li>
-      <x-select v-model="term" placeholder="期别">
+      <x-select v-model="value_term" placeholder="期别">
         <x-option v-for="_ in terms" :label="_.label" :value="_.value" :key="_.value"></x-option>
       </x-select>
       <div class="err">&nbsp;</div>
     </li>
     <li>
-      <x-select v-model="lesson_am" placeholder="上午课程">
+      <x-select v-model="value_lesson_am" placeholder="上午课程">
         <x-option v-for="_ in lessonList_am" :label="_.label" :value="_.value" :key="_.value"></x-option>
       </x-select>
       <div class="err">&nbsp;</div>
     </li>
     <li>
-      <x-select v-model="lesson_pm" placeholder="下午课程">
+      <x-select v-model="value_lesson_pm" placeholder="下午课程">
         <x-option v-for="_ in lessonList_pm" :label="_.label" :value="_.value" :key="_.value"></x-option>
       </x-select>
       <div class="err">&nbsp;</div>
@@ -43,7 +43,9 @@ import {
   validatePhone,
   validateAge,
   validateIdCard
-} from "@/common/unique/validator";
+} from "@/common/util/validator";
+
+import { list2Map } from "@/common/util/util";
 
 export default {
   props: {},
@@ -59,41 +61,33 @@ export default {
       ageError: "",
       phoneError: "",
       idCardError: "",
-      lessonMap: {
-        "1": {
-          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
-          pm: [{ label: "棒球", value: "3" }, { label: "网球", value: "6" }]
-        },
-        "2": {
-          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
-          pm: [{ label: "乒乓球", value: "4" }, { label: "网球", value: "6" }]
-        },
-        "3": {
-          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
-          pm: [{ label: "足球", value: "5" }, { label: "网球", value: "6" }]
-        }
-      },
+      // selections
       terms: [
         { label: "第一期", value: "1" },
         { label: "第二期", value: "2" },
         { label: "第三期", value: "3" }
       ],
-      term: "1",
+      lessonMap: {
+        "1": {
+          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
+          pm: [{ label: "棒球", value: "3" }, { label: "网球", value: "4" }]
+        },
+        "2": {
+          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
+          pm: [{ label: "乒乓球", value: "5" }, { label: "网球", value: "4" }]
+        },
+        "3": {
+          am: [{ label: "游泳", value: "1" }, { label: "滑冰", value: "2" }],
+          pm: [{ label: "足球", value: "6" }, { label: "网球", value: "4" }]
+        }
+      },
+      // 选中的学期
+      value_term: "",
       lessonList_am: [],
       lessonList_pm: [],
-      lesson_am: "",
-      lesson_pm: ""
+      value_lesson_am: "",
+      value_lesson_pm: ""
     };
-  },
-  computed: {},
-  watch: {
-    term(newVal, oldVal) {
-      const lessonList = this.lessonMap[newVal];
-      this.lessonList_am = lessonList.am;
-      this.lessonList_pm = lessonList.pm;
-      this.lesson_am = this.lessonList_am[0].value;
-      this.lesson_pm = this.lessonList_pm[0].value;
-    }
   },
   methods: {
     checkName() {
@@ -118,23 +112,52 @@ export default {
       this.checkIdCard();
       const err =
         this.nameError || this.ageError || this.phoneError || this.idCardError;
-      const data = {
+      if (err) {
+        return { err };
+      }
+
+      return {
         name: this.name,
         age: this.age,
-        phone: this.phone,
         idCard: this.idCard,
-        sex: this.sex,
-        group: this.group
+        phone: this.phone,
+        term: this.term,
+        lesson_am: this.lesson_am,
+        lesson_pm: this.lesson_pm
       };
-      if (err) return { err };
-      else return data;
+    }
+  },
+  computed: {
+    map_terms() {
+      return list2Map(this.terms);
+    },
+    term() {
+      return this.map_terms[this.value_term];
+    },
+    lessonMap_am() {
+      return list2Map(this.lessonList_am);
+    },
+    lessonMap_pm() {
+      return list2Map(this.lessonList_pm);
+    },
+    lesson_am() {
+      return this.lessonMap_am[this.value_lesson_am];
+    },
+    lesson_pm() {
+      return this.lessonMap_pm[this.value_lesson_pm];
+    }
+  },
+  watch: {
+    value_term(newVal, oldVal) {
+      const lessonList = this.lessonMap[newVal];
+      this.lessonList_am = lessonList.am;
+      this.lessonList_pm = lessonList.pm;
+      this.value_lesson_am = this.lessonList_am[0].value;
+      this.value_lesson_pm = this.lessonList_pm[0].value;
     }
   },
   created() {
-    this.lessonList_am = this.lessonMap[1].am;
-    this.lessonList_pm = this.lessonMap[1].pm;
-    this.lesson_am = this.lessonList_am[0].value;
-    this.lesson_pm = this.lessonList_pm[0].value;
+    this.value_term = "1";
   }
 };
 </script>

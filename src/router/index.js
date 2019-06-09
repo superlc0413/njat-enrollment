@@ -8,6 +8,7 @@ import CoupeEnroll from '@/card/coupe-enroll/coupe-enroll'
 import FamilyEnroll from '@/card/family-enroll/family-enroll'
 import EnrollSuccess from '@/card/enroll-success/enroll-success'
 import OrderList from '@/card/order-list/order-list'
+import ConfirmOrder from '@/card/confirm-order/confirm-order'
 import EnrollOver from '@/card/enroll-over/enroll-over'
 import Page404 from '@/card/404/404'
 
@@ -47,6 +48,10 @@ const map_routes = {
     component: OrderList,
     title: '我的订单'
   },
+  "confirm-order": {
+    component: ConfirmOrder,
+    title: '信息确认'
+  },
   "enroll-over": {
     component: EnrollOver,
     title: '报名截止'
@@ -56,12 +61,14 @@ const map_routes = {
 // 报名进行中的路由
 const routes_enrolling = [
   "enroll-entry",
-  "normal-enroll"
-]
+  "normal-enroll",
+  "confirm-order"
+];
 // 报名结束后的路由
 const routes_enrollEnd = [
   "enroll-over"
 ]
+
 // 用特定的路由配置列表生成vue路由
 const routes = []
 routes_enrolling.forEach(key => {
@@ -106,6 +113,10 @@ routes.push(
 )
 
 const myRouter = new Router({ routes })
+
+myRouter.beforeEach((to, from, next) => {
+  next();
+})
 
 myRouter.afterEach((to, from) => {
   document.title = to.meta.title
