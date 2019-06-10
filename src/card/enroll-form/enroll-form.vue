@@ -8,12 +8,16 @@
       <x-input placeholder="年龄" maxlength="3" @blur="checkAge" v-model="age"></x-input>
       <div class="err">{{ageError}}</div>
     </li>
+    <!-- <li>
+      <x-input placeholder="身高(cm)" maxlength="3" @blur="checkHeight" v-model="height"></x-input>
+      <div class="err">{{heightError}}</div>
+    </li>-->
     <li>
       <x-input placeholder="身份证" maxlength="18" @blur="checkIdCard" v-model="idCard"></x-input>
       <div class="err">{{idCardError}}</div>
     </li>
     <li>
-      <x-input placeholder="手机号" maxlength="11" @blur="checkPhone" :must="false" v-model="phone"></x-input>
+      <x-input placeholder="手机号" maxlength="11" @blur="checkPhone" v-model="phone"></x-input>
       <div class="err">{{phoneError}}</div>
     </li>
     <li>
@@ -42,7 +46,8 @@ import {
   validateName,
   validatePhone,
   validateAge,
-  validateIdCard
+  validateIdCard,
+  validataHeight
 } from "@/common/util/validator";
 
 import { list2Map } from "@/common/util/util";
@@ -55,6 +60,7 @@ export default {
       optional: "选填",
       name: "",
       age: "",
+      height: "",
       phone: "",
       idCard: "",
       nameError: "",
@@ -96,6 +102,9 @@ export default {
     checkAge() {
       this.ageError = validateAge(this.age) ? "" : "请输入正确的年龄";
     },
+    checkHeight() {
+      this.heightError = validataHeight(this.height) ? "" : "请输入正确的身高";
+    },
     checkPhone() {
       // 是孩子手机号为空，或者手机号校验通过，手机号就不报错
       this.phoneError = validatePhone(this.phone) ? "" : "请输入正确的手机号";
@@ -128,6 +137,12 @@ export default {
     }
   },
   computed: {
+    age1() {
+      const year = parseInt(this.idCard.substr(6, 4));
+      const now = new Date();
+      const curYear = now.getFullYear();
+      return curYear - year;
+    },
     map_terms() {
       return list2Map(this.terms);
     },
@@ -158,6 +173,20 @@ export default {
   },
   created() {
     this.value_term = "1";
+
+    let pJSON = localStorage.getItem("confirm_order.person");
+    if (pJSON) {
+      const p = JSON.parse(pJSON);
+      // input信息
+      this.name = p.name;
+      this.age = p.age;
+      this.idCard = p.idCard;
+      this.phone = p.phone;
+      // select信息
+      this.value_term = p.term && p.term.value;
+      this.value_lesson_am = p.lesson_am && p.lesson_am.value;
+      this.value_lesson_pm = p.lesson_pm && p.lesson_pm.value;
+    }
   }
 };
 </script>

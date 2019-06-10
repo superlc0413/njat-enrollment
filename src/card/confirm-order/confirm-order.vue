@@ -9,6 +9,9 @@
         <x-data-item class="age" caption="年龄">{{age}}</x-data-item>
       </li>
       <li>
+        <x-data-item class="sex" caption="性别">{{sex}}</x-data-item>
+      </li>
+      <li>
         <x-data-item class="idcard" caption="身份证号">{{idCard}}</x-data-item>
       </li>
       <li>
@@ -49,7 +52,7 @@ export default {
       term: {},
       lesson_am: {},
       lesson_pm: {},
-      toPay: 4980
+      toPay: 4680
     };
   },
   methods: {
@@ -95,7 +98,7 @@ export default {
       }
     },
     back2Form() {
-      localStorage.setItem(businessId, "");
+      // localStorage.setItem(businessId, "");
       location.hash = "/normal-enroll";
     },
     confirmZOrder() {
@@ -135,7 +138,12 @@ export default {
         });
     }
   },
-  computed: {},
+  computed: {
+    sex() {
+      const sexNum = parseInt(this.idCard.substr(16, 1));
+      return sexNum % 2 == 0 ? "女" : "男";
+    }
+  },
   watch: {},
   created() {},
   mounted() {
@@ -153,12 +161,12 @@ export default {
     line-height: 1;
   }
   .info {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     > li {
       font-size: 0;
       padding: 0 10%;
       text-align: left;
-      margin-top: 0.7rem;
+      margin-top: 0.6rem;
       &:first-child {
         margin-top: 0;
       }

@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import titlePng from "@/asset/title-img.png";
+import titlePng from "@/asset/banner1.jpg";
 import starPng from "@/asset/star1.png";
 
 export default {
@@ -25,7 +25,7 @@ export default {
     return {
       titlePng,
       starPng,
-      useImgTitle: false,
+      useImgTitle: true,
       raceDate: ""
     };
   },
@@ -52,7 +52,7 @@ $logoRowMargin: 0.26rem;
   }
   .img-title {
     display: block;
-    width: 85%;
+    width: 100%;
     margin: 0 auto 0;
   }
   .date-row {

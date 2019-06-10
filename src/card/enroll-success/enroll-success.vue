@@ -1,5 +1,5 @@
 <template>
-  <x-page>
+  <x-page :at-top="true">
     <x-header/>
     <!-- <qrcode value="motherfucker" :options="{width:200}"></qrcode> -->
     <x-info icon="success.png" title="报名成功" desc="请关注微信公众号相关信息"/>
@@ -25,13 +25,13 @@ export default {
 <style lang="scss" scoped>
 .x-page {
   .x-info {
-    margin-top: 0.7rem;
+    margin-top: 0;
   }
   .x-button {
-    margin: 1rem auto 0;
+    margin: 0.75rem auto 0;
   }
   .x-footer {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
 }
 </style>

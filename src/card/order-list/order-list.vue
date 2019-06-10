@@ -1,5 +1,5 @@
 <template>
-  <x-page>
+  <x-page :at-top="true">
     <x-header></x-header>
     <div v-if="orderList.length>0" class="my-order">
       <div class="title tc">订单查询</div>
@@ -126,7 +126,7 @@ export default {
     .info-list {
       width: 85%;
       margin: 0.5rem auto 0;
-      height: 6rem;
+      height: 4.5rem;
       overflow-x: hidden;
       overflow-y: auto;
       > li {
@@ -154,13 +154,13 @@ export default {
   }
   .my-empty {
     .x-info {
-      margin-top: 1rem;
+      margin-top: 0rem;
     }
     .go-back {
-      margin: 1.45rem auto 0;
+      margin: 0.75rem auto 0;
     }
     .x-footer {
-      margin-top: 0.8rem;
+      margin-top: 1rem;
     }
   }
 }

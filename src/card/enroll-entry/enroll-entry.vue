@@ -1,10 +1,14 @@
 <template>
-  <x-page class="enroll-entry">
+  <x-page class="enroll-entry" :at-top="true">
     <x-header/>
-    <x-view x-pos="center">
-      <x-button @xclick="goToEnroll">开始报名</x-button>
+    <template v-if="rejected">
+      <div class="reject-txt tc">您必须先同意参赛须知</div>
+      <x-button @xclick="back2Notice">返回同意</x-button>
+    </template>
+    <template v-else>
+      <x-button class="btn1" @xclick="goToEnroll">开始报名</x-button>
       <x-button @xclick="checkMyOrder">我的订单</x-button>
-    </x-view>
+    </template>
     <x-footer/>
   </x-page>
 </template>
@@ -13,7 +17,9 @@
 export default {
   name: "index",
   data() {
-    return {};
+    return {
+      rejected: false
+    };
   },
   methods: {
     goToEnroll() {
@@ -21,20 +27,34 @@ export default {
     },
     checkMyOrder() {
       location.hash = "/order-list";
+    },
+    back2Notice() {
+      location.hash = "/enroll-notice";
     }
   },
-  created() {},
+  created() {
+    this.rejected = localStorage.getItem("notice-rejected") == 1;
+  },
   mounted() {}
 };
 </script>
 
 <style lang="scss" scoped>
 .enroll-entry {
+  .reject-txt {
+    font-size: 16px;
+    color: #fff;
+    line-height: 30px;
+    margin-top: 1.8rem;
+  }
   .x-button {
-    margin-top: 0.75rem;
-    &:first-child {
-      margin-top: 0;
+    margin: 1.5rem auto 0;
+    &.btn1 {
+      margin-top: 1.8rem;
     }
+  }
+  .x-footer {
+    margin-top: 1.2rem;
   }
 }
 </style>
