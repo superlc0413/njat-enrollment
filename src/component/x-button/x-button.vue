@@ -1,10 +1,5 @@
 <template>
-  <div
-    class="x-button tc noselect"
-    @click="btnClk"
-    :class="{disabled}"
-    :style="{height:`${height}px`, lineHeight:`${height}px`, width:`${height*2.2}px`, borderRadius:`${height*0.5}px`}"
-  >
+  <div class="x-button tc noselect" @click="btnClk" :class="{disabled}" :style="styleString">
     <slot></slot>
   </div>
 </template>
@@ -16,8 +11,12 @@ export default {
       default: false
     },
     height: {
-      type: Number,
+      type: [Number, String],
       default: 42
+    },
+    width: {
+      type: [Number, String],
+      default: 0
     }
   },
   data() {
@@ -26,6 +25,20 @@ export default {
   methods: {
     btnClk() {
       if (!this.disabled) this.$emit("xclick");
+    }
+  },
+  computed: {
+    styleString() {
+      if (this.width > 0) {
+        const height = this.width / 2.2;
+        return `height:${height}px;width:${this.width}px;
+                line-height:${height}px;
+                border-radius:${height * 0.5}px;`;
+      } else {
+        return `height:${this.height}px;width:${this.height * 2.2}px;
+                line-height:${this.height}px;
+                border-radius:${this.height * 0.5}px;`;
+      }
     }
   }
 };

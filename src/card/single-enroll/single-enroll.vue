@@ -1,6 +1,6 @@
 <template>
   <x-page>
-    <!-- <x-logo/> -->
+    <!-- <x-header/> -->
     <dl class="switch ib-ctn tc">
       <dd>单人报名</dd>
     </dl>

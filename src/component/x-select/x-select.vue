@@ -2,7 +2,7 @@
   <div class="x-select ib-ctn tc">
     <div :class="{must}" class="star tc">*</div>
     <div class="select-body">
-      <div @click.stop="switchOption" class="x-label ib-ctn">
+      <div @click.stop="toggleOption" class="x-label ib-ctn">
         <div class="placeholder">{{placeholder}}</div>
         <div class="selected">{{curLabel}}</div>
         <div class="arrow" :class="{open}"></div>
@@ -42,13 +42,21 @@ export default {
   data() {
     return {
       open: false,
-      // 当前的label
-      curLabel: "",
+      curLabel: null,
       curOption: null
     };
   },
+  computed: {},
+  watch: {
+    curOption(newVal, oldVal) {
+      // 切换展示值和选项的高光
+      this.curLabel = newVal.label || "";
+      oldVal && (oldVal.highlight = false);
+      newVal.highlight = true;
+    }
+  },
   methods: {
-    switchOption() {
+    toggleOption() {
       this.open = !this.open;
       this.excuteGlobalClkExceptMe();
     },
@@ -58,27 +66,16 @@ export default {
     showOption() {
       this.open = true;
     },
-    initSlots() {
-      if (this.$slots.default) {
-        this.$slots.default.forEach(_ => {
-          const com = _.componentInstance;
-          if (this.curVal == com.value) {
-            this.curLabel = com.label;
-            com.highlight = true;
-            this.curOption = com;
-          }
-          com.slotOwner = this;
-        });
+    optionCreated(vm_option) {
+      if (this.curVal == vm_option.value) {
+        this.curOption = vm_option;
       }
     },
-    modifyValue(option) {
-      if (this.curVal != option.value) {
-        this.curLabel = option.label;
-        this.$emit("change", option.value);
-        // 切换option高亮
-        this.curOption.highlight = false;
-        this.curOption = option;
-        this.curOption.highlight = true;
+    changeSelected(vm_option) {
+      if (this.curVal != vm_option.value) {
+        this.curOption = vm_option;
+        // 双向绑定：内向外
+        this.$emit("change", vm_option.value);
       }
       this.hideOption();
     }
@@ -89,9 +86,7 @@ export default {
       this.hideOption();
     });
   },
-  mounted() {
-    this.initSlots();
-  }
+  mounted() {}
 };
 </script>
 
@@ -112,13 +107,16 @@ export default {
     height: 36px;
     line-height: 36px;
     margin-left: 5px;
-    padding-left: 22px;
+    padding-left: 16px;
     background: rgba(0, 10, 45, 0.68);
     border-radius: 18px;
     .placeholder {
       font-size: 12px;
       color: rgba(255, 255, 255, 0.6);
-      width: 38px;
+      width: 50px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .selected {
       font-size: 12px;

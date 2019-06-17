@@ -62,14 +62,14 @@ export default {
     width: 256px;
     height: 36px;
     line-height: 36px;
-    padding-left: 22px;
+    padding-left: 16px;
     margin-left: 5px;
     background: rgba(0, 10, 45, 0.68);
     border-radius: 20px;
     .placeholder {
       color: rgba(255, 255, 255, 0.6);
       font-size: 12px;
-      width: 38px;
+      width: 50px;
     }
     input {
       color: rgba(255, 255, 255, 0.8);

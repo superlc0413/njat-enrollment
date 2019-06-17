@@ -1,119 +1,60 @@
 <template>
-  <x-page>
-    <!-- logo行 -->
-    <x-logo/>
-    <!-- 拒绝同意报名须知以后的提示信息 -->
-    <div v-if="noticeRejected" class="rejected">
-      <div class="txt tc">您必须先同意报名须知，才能参加报名哦</div>
-      <x-button @xclick="openNotice">去同意</x-button>
-    </div>
-    <!-- 家庭报名和个人报名入口 -->
-    <template v-else>
-      <div class="btns">
-        <x-button @xclick="singleEnroll()">单人报名</x-button>
-        <x-button @xclick="coupeEnroll()">双人报名</x-button>
-        <x-button @xclick="familyEnroll()">亲子报名</x-button>
-      </div>
-      <div class="my-order tc ib-ctn" @click="checkMyOrder()">
-        <img :src="arrLPng" class="opacity50">
-        <img :src="arrLPng" class="opacity80">
-        <img :src="arrLPng" class="margin0">
-        <div>订单查询</div>
-        <img :src="arrRPng">
-        <img :src="arrRPng" class="opacity80">
-        <img :src="arrRPng" class="opacity50 margin0">
-      </div>
+  <x-page class="enroll-entry" :at-top="true">
+    <x-header/>
+    <template v-if="rejected">
+      <div class="reject-txt tc">您必须先同意参赛须知</div>
+      <x-button @xclick="back2Notice">返回同意</x-button>
     </template>
-    <x-footer :class="{'notice-reject':noticeRejected}"/>
+    <template v-else>
+      <x-button class="btn1" @xclick="goToEnroll">开始报名</x-button>
+      <x-button @xclick="checkMyOrder">我的订单</x-button>
+    </template>
+    <x-footer/>
   </x-page>
 </template>
 
 <script>
-import orderList from "@/card/model/order-data";
-import arrLPng from "@/asset/arr-l1.png";
-import arrRPng from "@/asset/arr-r1.png";
-
-const ALWAYS_SHOW_NOTICE = true;
-
 export default {
   name: "index",
   data() {
     return {
-      arrLPng,
-      arrRPng,
-      noticeRejected: true,
-      orderList: []
+      rejected: false
     };
   },
   methods: {
-    singleEnroll() {
-      location.hash = "/single-enroll";
-    },
-    familyEnroll() {
-      location.hash = "/family-enroll";
-    },
-    coupeEnroll() {
-      location.hash = "/coupe-enroll";
-    },
-    openNotice() {
-      location.hash = "/enroll-notice";
+    goToEnroll() {
+      location.hash = "/normal-enroll";
     },
     checkMyOrder() {
       location.hash = "/order-list";
+    },
+    back2Notice() {
+      location.hash = "/enroll-notice";
     }
   },
   created() {
-    this.noticeRejected = localStorage.getItem("notice-rejected") == 1;
+    this.rejected = localStorage.getItem("notice-rejected") == 1;
   },
-  mounted() {
-    // TODO: 找不到更合适的实际插入loading
-    // this.loading()
-    // this.endLoading()
-  }
+  mounted() {}
 };
 </script>
 
 <style lang="scss" scoped>
-.x-page {
-  .rejected {
-    .txt {
-      color: #fcbb2c;
-      font-size: 0.32rem;
-      font-weight: bold;
-      line-height: 18px;
-      margin-top: 2rem;
-    }
-    .x-button {
-      margin: 2rem auto 0;
-    }
+.enroll-entry {
+  .reject-txt {
+    font-size: 16px;
+    color: #fff;
+    line-height: 30px;
+    margin-top: 1.8rem;
   }
-  .btns {
-    margin: 1rem auto 0;
-    .x-button {
-      margin: 0.75rem auto 0;
-      &:first-child {
-        margin-top: 0;
-      }
-    }
-  }
-  .my-order {
-    margin-top: 0.75rem;
-    line-height: 16px;
-    img {
-      margin-right: 0.1rem;
-      width: 6px;
-    }
-    div {
-      color: #fcbb2c;
-      font-size: 14px;
-      margin: 0 0.16rem;
+  .x-button {
+    margin: 1.5rem auto 0;
+    &.btn1 {
+      margin-top: 1.8rem;
     }
   }
   .x-footer {
-    margin-top: 1rem;
-    &.notice-reject {
-      margin-top: 2rem;
-    }
+    margin-top: 1.2rem;
   }
 }
 </style>

@@ -25,6 +25,11 @@ export const validateIdCard = (str, i = 0) => {
   else return false
 }
 
+export const validataHeight = height => {
+  height = parseInt(height)
+  return height > 0 && height < 250
+}
+
 export default {
   name: validateName,
   phone: validatePhone,
