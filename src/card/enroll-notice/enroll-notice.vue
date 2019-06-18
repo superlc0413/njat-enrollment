@@ -98,7 +98,7 @@ export default {
       height: 22px;
     }
     .ok {
-      margin-left: 1rem;
+      margin-left: 0.8rem;
     }
   }
   .x-footer {

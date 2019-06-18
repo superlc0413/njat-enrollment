@@ -28,7 +28,7 @@ export default {
     font-size: 14px;
     color: #fff;
     white-space: nowrap;
-    width: 5em;
+    width: 6em;
     text-align: right;
   }
   .x-data-item__value {

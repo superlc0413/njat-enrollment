@@ -1,10 +1,11 @@
 <template>
   <div class="x-header">
-    <ul v-if="!useImgTitle" class="txt-title">
+    <img v-if="useBanner" class="banner" :src="banner">
+    <ul v-else class="txt-title">
       <li>2019南京奥体中心</li>
-      <li>全域夏令营 活动报名</li>
+      <li>夏日泡泡</li>
+      <li>亲子mini马拉松</li>
     </ul>
-    <img v-if="useImgTitle" class="img-title" :src="titlePng">
     <div v-if="raceDate" class="date-row ib-ctn tc">
       <img :src="starPng" class="star opacity50">
       <img :src="starPng" class="star opacity80">
@@ -17,15 +18,15 @@
   </div>
 </template>
 <script>
-import titlePng from "@/asset/banner1.jpg";
+import banner from "@/asset/banner-run1.jpg";
 import starPng from "@/asset/star1.png";
 
 export default {
   data() {
     return {
-      titlePng,
+      banner,
       starPng,
-      useImgTitle: true,
+      useBanner: true,
       raceDate: ""
     };
   },
@@ -50,7 +51,7 @@ $logoRowMargin: 0.26rem;
       }
     }
   }
-  .img-title {
+  .banner {
     display: block;
     width: 100%;
     margin: 0 auto 0;

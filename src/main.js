@@ -23,7 +23,7 @@ import XDataItem from "@/component/x-data-item/x-data-item"
 import XPage from "@/component/x-page/x-page"
 import XView from "@/component/x-view/x-view"
 // 第三方组件
-// import VueQrcode from "@chenfengyuan/vue-qrcode"
+import VueQrcode from "@chenfengyuan/vue-qrcode"
 
 // const openid = getUrlParam('openid')
 // if (openid) {
@@ -93,7 +93,7 @@ Vue.mixin({
     XDataItem,
     XPage,
     XView,
-    // qrcode: VueQrcode
+    qrcode: VueQrcode
   }
 })
 
