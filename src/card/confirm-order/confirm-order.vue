@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     singlePrice() {
-      return this.families.length < 2 ? 119 : 99;
+      return this.families.length < 2 ? 118 : 99;
     },
     toPay() {
       return this.singlePrice * this.families.length;

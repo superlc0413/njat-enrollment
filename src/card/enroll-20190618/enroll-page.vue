@@ -1,10 +1,10 @@
 <template>
   <x-page :at-top="true">
     <!-- 标题行 -->
-    <div class="title-row">亲子报名</div>
+    <div class="title-row">注：单次报名十组及以上可以享受团购价</div>
     <!-- 多重表单 -->
     <ul class="form-ctnr">
-      <li v-for="(_, i) in formData" :key="i">
+      <li v-for="(_, i) in formData" :key="i" :class="`form${i+1}`">
         <div class="caption">报名家庭{{i+1}}</div>
         <enroll-form ref="forms"/>
       </li>
@@ -46,6 +46,13 @@ export default {
     },
     addFamily() {
       this.formData.push({ empty: true });
+      this.$nextTick(() => {
+        const jq_formCtnr = this.jq(".form-ctnr");
+        const jq_lastForm = jq_formCtnr.find(">li:last-child");
+        const top_lastForm = jq_lastForm.position().top;
+        const scrollTop_curr = jq_formCtnr.scrollTop();
+        jq_formCtnr.scrollTop(scrollTop_curr + top_lastForm);
+      });
     }
   },
   components: {
