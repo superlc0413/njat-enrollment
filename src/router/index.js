@@ -1,128 +1,111 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import EnrollEntry from '@/card/enroll-entry/enroll-entry'
-import EnrollNotice from '@/card/enroll-notice/enroll-notice'
-// import SingleEnroll from '@/card/single-enroll/single-enroll'
-// import CoupeEnroll from '@/card/coupe-enroll/coupe-enroll'
-// import FamilyEnroll from '@/card/family-enroll/family-enroll'
-import NormalEnroll from '@/card/normal-enroll/normal-enroll'
-import EnrollSuccess from '@/card/enroll-success/enroll-success'
-import OrderList from '@/card/order-list/order-list'
-import ConfirmOrder from '@/card/confirm-order/confirm-order'
-import EnrollOver from '@/card/enroll-over/enroll-over'
-import Page404 from '@/card/404/404'
+import Vue from "vue";
+import Router from "vue-router";
+import EnrollEntry from "@/card/enroll-entry/enroll-entry";
+import EnrollNotice from "@/card/enroll-notice/enroll-notice";
+import EnrollPage from "@/card/enroll-20190618/enroll-page";
+import EnrollSuccess from "@/card/enroll-success/enroll-success";
+import OrderList from "@/card/order-list/order-list";
+import ConfirmOrder from "@/card/confirm-order/confirm-order";
+import EnrollOver from "@/card/enroll-over/enroll-over";
+import Page404 from "@/card/404/404";
 
-Vue.use(Router)
+Vue.use(Router);
 
 // 所有路由的映射表
 const map_routes = {
   "enroll-notice": {
     component: EnrollNotice,
-    title: '报名须知'
+    title: "报名须知"
   },
   "enroll-entry": {
     component: EnrollEntry,
-    title: '报名入口'
+    title: "报名入口"
   },
-  // "single-enroll": {
-  //   component: SingleEnroll,
-  //   title: '个人报名'
-  // },
-  // "coupe-enroll": {
-  //   component: CoupeEnroll,
-  //   title: '双人报名'
-  // },
-  // "family-enroll": {
-  //   component: FamilyEnroll,
-  //   title: '亲子报名'
-  // },
-  "normal-enroll": {
-    component: NormalEnroll,
-    title: '活动报名'
+  "enroll-page": {
+    component: EnrollPage,
+    title: "活动报名"
   },
   "confirm-order": {
     component: ConfirmOrder,
-    title: '信息确认'
+    title: "信息确认"
   },
   "enroll-success": {
     component: EnrollSuccess,
-    title: '报名成功'
+    title: "报名成功"
   },
   "order-list": {
     component: OrderList,
-    title: '我的订单'
+    title: "我的订单"
   },
   "enroll-over": {
     component: EnrollOver,
-    title: '报名截止'
+    title: "报名截止"
   }
-}
+};
 
 // 报名进行中的路由
 const routes_enrolling = [
   "enroll-notice",
   "enroll-entry",
-  "normal-enroll",
+  "enroll-page",
   "confirm-order",
   "enroll-success",
   "order-list"
 ];
 // 报名结束后的路由
-const routes_enrollEnd = [
-  "enroll-over"
-]
+const routes_enrollEnd = ["enroll-over"];
 
 // 用特定的路由配置列表生成vue路由
-const routes = []
+const routes = [];
 routes_enrolling.forEach(key => {
-  const option = map_routes[key]
+  const option = map_routes[key];
   if (option) {
     routes.push({
-      path: '/' + key,
+      path: "/" + key,
       name: key,
       component: option.component,
       meta: {
         title: option.title
       }
-    })
+    });
   }
-})
+});
 
 // 特殊路由
 routes.push(
   {
-    path: '/',
-    name: 'default',
+    path: "/",
+    name: "default",
     component: routes[0].component,
     meta: {
       title: routes[0].meta.title
     }
   },
   {
-    path: '/404',
-    name: '404',
+    path: "/404",
+    name: "404",
     component: Page404,
     meta: {
-      title: '找不到该页',
+      title: "找不到该页"
     }
   },
   {
-    path: '*',
-    redirect: '/404',
+    path: "*",
+    redirect: "/404",
     meta: {
-      title: '找不到该页',
+      title: "找不到该页"
     }
   }
-)
+);
 
-const myRouter = new Router({ routes })
+const myRouter = new Router({ routes });
 
 // myRouter.beforeEach((to, from, next) => {
 //   next();
 // })
 
 myRouter.afterEach((to, from) => {
-  document.title = to.meta.title
-})
+  document.title = to.meta.title;
+});
 
-export default myRouter
+export default myRouter;

@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     goToEnroll() {
-      location.hash = "/normal-enroll";
+      location.hash = "/enroll-page";
     },
     checkMyOrder() {
       location.hash = "/order-list";
@@ -33,7 +33,8 @@ export default {
     }
   },
   created() {
-    this.rejected = localStorage.getItem("notice-rejected") == 1;
+    // this.rejected = localStorage.getItem("notice-rejected") == 1;
+    this.rejected = false
   },
   mounted() {}
 };
@@ -50,11 +51,11 @@ export default {
   .x-button {
     margin: 1.5rem auto 0;
     &.btn1 {
-      margin-top: 1.8rem;
+      margin-top: 1.6rem;
     }
   }
   .x-footer {
-    margin-top: 1.2rem;
+    margin-top: 1.3rem;
   }
 }
 </style>

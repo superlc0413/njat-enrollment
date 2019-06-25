@@ -105,10 +105,12 @@ export default {
   .select-body {
     width: 256px;
     height: 36px;
-    line-height: 36px;
+    line-height: 32px;
     margin-left: 5px;
     padding-left: 16px;
-    background: rgba(0, 10, 45, 0.68);
+    // background: rgba(0, 10, 45, 0.68);
+    background: rgba(8, 18, 80, 0.6);
+    border: 2px solid rgba(2555, 255, 255, 0.5);
     border-radius: 18px;
     .placeholder {
       font-size: 12px;

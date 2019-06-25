@@ -24,11 +24,21 @@ export default {
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
+  &.strong {
+    .x-data-item__caption {
+      font-weight: bold;
+      color: #b2f534;
+    }
+    .x-data-item__value {
+      font-weight: bold;
+      color: #b2f534;
+    }
+  }
   .x-data-item__caption {
     font-size: 14px;
     color: #fff;
     white-space: nowrap;
-    width: 5em;
+    width: 6em;
     text-align: right;
   }
   .x-data-item__value {

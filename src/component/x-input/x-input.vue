@@ -61,22 +61,23 @@ export default {
   .input-body {
     width: 256px;
     height: 36px;
-    line-height: 36px;
+    line-height: 32px;
     padding-left: 16px;
     margin-left: 5px;
-    background: rgba(0, 10, 45, 0.68);
+    background: rgba(8, 18, 80, 0.6);
     border-radius: 20px;
+    border: 2px solid rgba(2555, 255, 255, 0.5);
     .placeholder {
       color: rgba(255, 255, 255, 0.6);
       font-size: 12px;
-      width: 50px;
+      width: 63px;
     }
     input {
       color: rgba(255, 255, 255, 0.8);
       font-size: 12px;
       margin-left: 10px;
       line-height: 20px;
-      width: 160px;
+      width: 150px;
       background: transparent;
     }
     ::placeholder {

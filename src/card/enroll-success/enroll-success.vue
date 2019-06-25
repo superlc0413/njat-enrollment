@@ -1,7 +1,6 @@
 <template>
   <x-page :at-top="true">
     <x-header/>
-    <!-- <qrcode value="motherfucker" :options="{width:200}"></qrcode> -->
     <x-info icon="success.png" title="报名成功" desc="请关注微信公众号相关信息"/>
     <x-button @xclick="back2Entry">返回入口</x-button>
     <x-footer/>

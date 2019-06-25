@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import EnrollForm from "@/card/enroll-form/enroll-form";
+import EnrollForm from "./enroll-form";
 
 export default {
   data() {

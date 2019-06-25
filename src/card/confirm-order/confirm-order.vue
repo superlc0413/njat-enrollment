@@ -1,35 +1,44 @@
 <template>
   <x-page class="confirm-order">
     <div class="tc title">请确认您的报名信息</div>
-    <ul class="info">
-      <li>
-        <x-data-item class="name" caption="姓名">{{name}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="age" caption="年龄">{{age}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="sex" caption="性别">{{sex}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="idcard" caption="身份证号">{{idCard}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="phone" caption="联系电话">{{phone}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="term" caption="期别">{{term.label}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="lesson_am" caption="上午课程">{{lesson_am.label}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="lesson_pm" caption="下午课程">{{lesson_pm.label}}</x-data-item>
-      </li>
-      <li>
-        <x-data-item class="price" caption="需付款">￥{{toPay}}元</x-data-item>
-      </li>
-    </ul>
+    <!-- 列表信息 -->
+    <div class="scroll-ctnr">
+      <ul class="info" v-for="(f,i) in families" :key="i">
+        <li>
+          <x-data-item class="name" caption="家长姓名">{{f.parentName}}</x-data-item>
+        </li>
+        <li>
+          <x-data-item class="age" caption="家长年龄">{{f.parentAge}}</x-data-item>
+        </li>
+        <li>
+          <x-data-item class="idcard" caption="家长身份证">{{f.parentIdCard}}</x-data-item>
+        </li>
+        <li>
+          <x-data-item class="phone" caption="家长手机号">{{f.parentPhone}}</x-data-item>
+        </li>
+        <li>
+          <x-data-item class="name" caption="孩子姓名">{{f.childName}}</x-data-item>
+        </li>
+        <li>
+          <x-data-item class="age" caption="孩子年龄">{{f.childAge}}</x-data-item>
+        </li>
+        <li>
+          <x-data-item class="idcard" caption="孩子身份证">{{f.childIdCard}}</x-data-item>
+        </li>
+        <li v-if="!!f.childPhone">
+          <x-data-item class="phone" caption="孩子手机号">{{f.childPhone}}</x-data-item>
+        </li>
+      </ul>
+      <!-- 总计信息 -->
+      <ul class="total-info">
+        <li>
+          <x-data-item class="price" caption="每对亲子">￥{{singlePrice}}元</x-data-item>
+        </li>
+        <li>
+          <x-data-item class="price" caption="共需付款">￥{{toPay}}元</x-data-item>
+        </li>
+      </ul>
+    </div>
     <div class="btns ib-ctn">
       <x-button class="back-btn" @xclick="back2Form">重新填写</x-button>
       <x-button class="confirm-btn" @xclick="confirmZOrder">去付款</x-button>
@@ -40,81 +49,52 @@
 <script>
 import wxPay from "@/common/mixin/wx-pay.js";
 
-const businessId = "confirm_order.person";
+const businessId = "qinzipao.confirm_order.family";
 
 export default {
   data() {
     return {
-      name: "",
-      age: "",
-      idCard: "",
-      phone: "",
-      term: {},
-      lesson_am: {},
-      lesson_pm: {},
-      toPay: 4680
+      families: []
     };
   },
   methods: {
     getParamsFromGlobal() {
-      const p = this.global.person;
-      if (p) {
-        // input信息
-        this.name = p.name || "";
-        this.age = p.age || "";
-        this.idCard = p.idCard || "";
-        this.phone = p.phone || "";
-        // select信息
-        this.term = p.term || {};
-        this.lesson_am = p.lesson_am || {};
-        this.lesson_pm = p.lesson_pm || {};
-        // 缓存信息
-        localStorage.setItem(
-          businessId,
-          JSON.stringify({
-            name: this.name,
-            age: this.age,
-            idCard: this.idCard,
-            phone: this.phone,
-            term: this.term,
-            lesson_am: this.lesson_am,
-            lesson_pm: this.lesson_pm
-          })
-        );
+      const list = this.global.enrollingList;
+      if (Array.isArray(list)) {
+        this.families.push(...list);
+        // 缓存新信息
+        localStorage.setItem(businessId, JSON.stringify(list));
       } else {
-        let pJSON = localStorage.getItem(businessId);
-        if (pJSON) {
-          const p = JSON.parse(pJSON);
-          // input信息
-          this.name = p.name;
-          this.age = p.age;
-          this.idCard = p.idCard;
-          this.phone = p.phone;
-          // select信息
-          this.term = p.term || {};
-          this.lesson_am = p.lesson_am || {};
-          this.lesson_pm = p.lesson_pm || {};
+        // 读取缓存
+        const fJSON = localStorage.getItem(businessId);
+        if (fJSON) {
+          const list = JSON.parse(fJSON);
+          const len = this.families.length;
+          this.families.splice(0, len, ...list);
         }
       }
     },
     back2Form() {
       // localStorage.setItem(businessId, "");
-      location.hash = "/normal-enroll";
+      location.hash = "/enroll-page";
     },
     confirmZOrder() {
-      const params = {
-        name: this.name,
-        age: this.age,
-        idCard: this.idCard,
-        phone: this.phone,
-        period: this.term.value,
-        forenoon: this.lesson_am.value,
-        afternoon: this.lesson_pm.value
-      };
+      const params = this.families.map(_ => {
+        return {
+          name: _.parentName,
+          idCard: _.parentIdCard,
+          phone: _.parentPhone,
+          age: _.parentAge,
+          childName: _.childName,
+          childIdCard: _.childIdCard,
+          childPhone: _.childPhone,
+          childAge: _.childAge
+        };
+      });
       // 调用接口提交报名数据
       this.loading();
       this.$http
-        .post("/join2.php", Object.assign({}, params, {}))
+        .post("/join.php", Object.assign({}, params, {}))
         .then(resp => {
           if (resp && resp.data && resp.data.code == 200) {
             // js调启支付
@@ -136,12 +116,18 @@ export default {
           this.endLoading();
           this.msg("连接失败，请稍后再试");
         });
+    },
+    calcSex(idCard) {
+      const sexNum = parseInt(idCard.substr(16, 1));
+      return sexNum % 2 == 0 ? "女" : "男";
     }
   },
   computed: {
-    sex() {
-      const sexNum = parseInt(this.idCard.substr(16, 1));
-      return sexNum % 2 == 0 ? "女" : "男";
+    singlePrice() {
+      return this.families.length < 10 ? 118 : 99;
+    },
+    toPay() {
+      return this.singlePrice * this.families.length;
     }
   },
   watch: {},
@@ -154,27 +140,51 @@ export default {
 
 <style lang="scss">
 .confirm-order {
+  padding-top: 0;
   .title {
     color: gold;
     font-size: 16px;
     font-weight: bold;
     line-height: 1;
   }
-  .info {
-    margin-top: 0.75rem;
-    > li {
-      font-size: 0;
-      padding: 0 10%;
-      text-align: left;
-      margin-top: 0.6rem;
+  .scroll-ctnr {
+    height: 9rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .info {
+      width: 90%;
+      margin: 0 auto;
+      padding: 0.35rem 0;
+      border-bottom: 1px dashed #fff;
       &:first-child {
-        margin-top: 0;
+        margin-top: 0.3rem;
+      }
+      > li {
+        font-size: 0;
+        padding: 0 5%;
+        text-align: left;
+        margin-top: 0.5rem;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+    .total-info {
+      margin-top: 0.6rem;
+      > li {
+        font-size: 0;
+        padding: 0 10%;
+        text-align: left;
+        margin-top: 0.4rem;
+        &:first-child {
+          margin-top: 0;
+        }
       }
     }
   }
   .btns {
     text-align: center;
-    margin: 0.7rem auto 0;
+    margin: 0.6rem auto 0;
     .confirm-btn {
       margin-left: 1rem;
     }
