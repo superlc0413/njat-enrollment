@@ -24,6 +24,16 @@ export default {
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
+  &.strong {
+    .x-data-item__caption {
+      font-weight: bold;
+      color: #b2f534;
+    }
+    .x-data-item__value {
+      font-weight: bold;
+      color: #b2f534;
+    }
+  }
   .x-data-item__caption {
     font-size: 14px;
     color: #fff;

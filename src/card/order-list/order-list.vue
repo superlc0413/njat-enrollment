@@ -26,6 +26,9 @@
           <div>
             <x-data-item caption="孩子手机号">{{_.childPhone}}</x-data-item>
           </div>
+          <div>
+            <x-data-item caption="报名序号" class="strong">{{_.sequence}}</x-data-item>
+          </div>
         </li>
       </ul>
       <x-footer/>
@@ -121,7 +124,7 @@ export default {
 .x-page {
   .my-order {
     .title {
-      color: #fff;
+      color: #b2f534;
       font-size: 18px;
       font-weight: bold;
       margin: 0.6rem auto 0;

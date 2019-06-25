@@ -93,7 +93,7 @@ export default {
   }
   .form-ctnr {
     margin-top: 0.3rem;
-    height: 9.5rem;
+    height: 9rem;
     overflow-x: hidden;
     overflow-y: scroll;
     .caption {
