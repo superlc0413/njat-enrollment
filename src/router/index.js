@@ -53,11 +53,11 @@ const routes_enrolling = [
   "order-list"
 ];
 // 报名结束后的路由
-const routes_enrollEnd = ["enroll-over"];
+const routes_enrollEnd = ["enroll-over", "order-list"];
 
 // 用特定的路由配置列表生成vue路由
 const routes = [];
-routes_enrolling.forEach(key => {
+routes_enrollEnd.forEach(key => {
   const option = map_routes[key];
   if (option) {
     routes.push({

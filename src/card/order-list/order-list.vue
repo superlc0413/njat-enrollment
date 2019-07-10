@@ -31,13 +31,13 @@
           </div>
         </li>
       </ul>
-      <x-footer/>
+      <x-footer />
     </div>
     <!-- 无数据 -->
     <div v-else class="my-empty">
       <x-info icon="no-order.png" title="您暂无任何订单" :desc="desc"></x-info>
       <x-button class="go-back" @xclick="goBack">{{btnTxt}}</x-button>
-      <x-footer/>
+      <x-footer />
     </div>
     <!-- 二维码弹层 -->
     <div class="qr-popper ib-ctn tc" v-if="qrVisible" @click="hideQrCode">
@@ -85,6 +85,9 @@ export default {
     btnTxt() {
       return this.enrollOver ? "返回首页" : "返回报名";
     }
+  },
+  created() {
+    this.enrollOver = localStorage.getItem("enroll-over") === "1";
   },
   mounted() {
     if (this.devMode) {

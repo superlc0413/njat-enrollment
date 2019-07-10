@@ -33,7 +33,8 @@ export default {
     }
   },
   created() {
-    // this.rejected = localStorage.getItem("notice-rejected") == 1;
+    localStorage.setItem("enroll-over","0")
+    this.rejected = localStorage.getItem("notice-rejected") == 1;
     this.rejected = false
   },
   mounted() {}
