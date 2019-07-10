@@ -2,7 +2,7 @@
   <x-page class="enroll-over">
     <x-header />
     <h3 class="tc">报名已结束，更多精彩活动敬请期待</h3>
-    <!-- <h4 class="tc">咨询电话：025-86690000</h4> -->
+    <h4 class="tc">咨询电话：025-86690000</h4>
     <x-button @xclick="toMyOrder">我的订单</x-button>
     <x-footer />
   </x-page>
